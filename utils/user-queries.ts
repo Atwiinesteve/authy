@@ -1,15 +1,11 @@
-// import prisma from "@/lib/prisma.db";
-// import { loginSchema } from "@/schemas/auth-schems";
-// import * as z from "zod";
+// import "server-only";
 
-// export const findUserByEmail = async (
-// 	email: string,
-// ): Promise<z.infer<typeof loginSchema>> => {
-// 	const { data } = loginSchema.safeParse();
-// 	const user = await prisma.user.findUnique({
-// 		where: {
-// 			email: data?.email,
-// 		},
-// 	});
-// 	return user;
-// };
+import prisma from "@/lib/prisma.db";
+
+export async function getUserByEmail(email: string) {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if(!user) {
+        console.log({message: "No user was found."})
+    }
+    return user;
+}

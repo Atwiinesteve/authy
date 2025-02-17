@@ -1,9 +1,9 @@
 //  imports
 import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import { loginSchema } from "./schemas/auth-schems";
-import prisma from "./lib/prisma.db";
 import bcrypt from "bcrypt";
+import Credentials from "next-auth/providers/credentials";
+import { getUserByEmail } from "./utils/user-queries";
+import { loginSchema } from "./schemas/auth-schems";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	session: { strategy: "jwt" },
@@ -11,30 +11,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 	pages: { signIn: "/login" },
 	providers: [
 		Credentials({
-            credentials: {
-                email: {},
-                password: {}
-            },
-			authorize: async (credentials) => {
+			 async authorize (credentials) {
 				const parsedCredentials = loginSchema.safeParse(credentials);
-				if (parsedCredentials.success) {
+				if(parsedCredentials.success) {
 					const { email, password } = parsedCredentials.data;
 
-					const user = await prisma.user.findUnique({
-						where: {
-							email: email,
-						},
-					});
-
+					// get user from database
+					const user = await getUserByEmail(email);
 					if (!user) return null;
-					if (!user.password) return null;
+					if (!user?.password) return null;
 
-					const passwordsMatch = await bcrypt.compare(user.password, password);
-
-					if (passwordsMatch) {
-						const { password: _, ...userWithoutPassword } = user;
+					const passwordsMatch = await bcrypt.compare(password, user.password);
+					if(passwordsMatch) {
+						const {password: _, ...userWithoutPassword} = user;
 						return userWithoutPassword;
 					}
+
+					console.log(user)
 				}
 				return null;
 			},

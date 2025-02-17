@@ -7,14 +7,10 @@ import { signIn } from "@/auth";
 
 export async function loginUserAction(values: z.infer<typeof loginSchema>) {
 	try {
-		await signIn("credentials", { values, redirect: false });
-		return { success: true };
+		await signIn("credentials", { ...values, redirect: false });	
+	  return { success: true };
 	} catch (error) {
-		console.log(error);
-		return {
-			success: false,
-			message: "Internal Server Error.",
-			statusCode: "500",
-		};
+	  console.error("Unexpected error:", error);
+	  return { success: false, error: "An unexpected error occurred." };
 	}
-}
+  }

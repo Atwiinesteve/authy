@@ -20,9 +20,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<body
-				className={`${poppins.className} antialiased`}>
+				className={`${poppins.className} antialiased`} suppressHydrationWarning>
 				<div className="min-h-screen bg-background flex flex-col">
 					<NavigationBar />
 					{children}
