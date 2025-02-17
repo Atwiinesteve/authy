@@ -3,10 +3,11 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import NavigationBar from "@/components/navigation-bar";
 import { Toaster } from "@/components/ui/sonner";
+import Providers from "@/components/providers";
 
 const poppins = Poppins({
-	subsets: ["latin"],
-	weight: ["400", "500", "600"],
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -20,15 +21,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-		<html lang="en" suppressHydrationWarning>
-			<body
-				className={`${poppins.className} antialiased`} suppressHydrationWarning>
-				<div className="min-h-screen bg-background flex flex-col">
-					<NavigationBar />
-					{children}
-					<Toaster richColors={true} />
-				</div>
-			</body>
-		</html>
-	);
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${poppins.className} antialiased`}
+        suppressHydrationWarning
+      >
+        <div className="min-h-screen bg-background flex flex-col">
+          <Providers>
+            <NavigationBar />
+            {children}
+            <Toaster richColors={true} />
+          </Providers>
+        </div>
+      </body>
+    </html>
+  );
 }

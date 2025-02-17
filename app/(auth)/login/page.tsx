@@ -109,13 +109,6 @@ export default function LoginPage() {
 								</FormItem>
 							)}
 						/>
-						<div className="flex items-center justify-between">
-							<a
-								href="#"
-								className="text-sm font-medium text-primary hover:text-primary/90">
-								Forgot password?
-							</a>
-						</div>
 						<Button
 							type="submit"
 							className="w-full"
