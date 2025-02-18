@@ -3,7 +3,6 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import NavigationBar from "@/components/navigation-bar";
 import { Toaster } from "@/components/ui/sonner";
-import Providers from "@/components/providers";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,11 +26,9 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <div className="min-h-screen bg-background flex flex-col">
-          <Providers>
             <NavigationBar />
             {children}
             <Toaster richColors={true} />
-          </Providers>
         </div>
       </body>
     </html>
