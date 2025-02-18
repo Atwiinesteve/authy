@@ -1,7 +1,7 @@
 //  imports
 import NextAuth from "next-auth";
 import bcrypt from "bcrypt";
-import Credentials from "next-auth/providers/credentials";
+import credentials from "next-auth/providers/credentials";
 import { getUserByEmail } from "./utils/user-queries";
 import { loginSchema } from "./schemas/auth-schems";
 
@@ -10,7 +10,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 	secret: process.env.AUTH_SECRET,
 	pages: { signIn: "/login" },
 	providers: [
-		Credentials({
+		credentials({
 			 async authorize (credentials) {
 				const parsedCredentials = loginSchema.safeParse(credentials);
 				if(parsedCredentials.success) {
@@ -26,8 +26,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 						const {password: _, ...userWithoutPassword} = user;
 						return userWithoutPassword;
 					}
-
-					console.log(user)
 				}
 				return null;
 			},

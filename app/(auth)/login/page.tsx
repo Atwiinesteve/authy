@@ -40,7 +40,7 @@ export default function LoginPage() {
 			toast.success("Login successful.");
 			redirect("/dashboard");
 		} else {
-			toast.error("Invalid Credentials. Please try again.");
+			toast.error("Invalid Credentials/No user was found. Please try again.");
 			redirect("/login");
 		}
 	}
