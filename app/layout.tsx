@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import NavigationBar from "@/components/navigation-bar";
 import { Toaster } from "@/components/ui/sonner";
+import { Providers } from "@/components/providers";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,11 +26,13 @@ export default function RootLayout({
         className={`${poppins.className} antialiased`}
         suppressHydrationWarning
       >
-        <div className="min-h-screen bg-background flex flex-col">
+        <Providers>
+          <div className="min-h-screen bg-background flex flex-col">
             <NavigationBar />
             {children}
             <Toaster richColors={true} />
-        </div>
+          </div>
+        </Providers>
       </body>
     </html>
   );
